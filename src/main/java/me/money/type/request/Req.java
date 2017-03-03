@@ -16,10 +16,10 @@ import okhttp3.Response;
 public class Req {
 
 	//众筹状态
-	// private static String url = "http://plugin.client.qxiu.com/qmeng/pay/crowd/info";
+	 private static String url = "http://plugin.client.qxiu.com/qmeng/pay/crowd/info";
 	//调用设备
 //	private static String url = "http://123.56.124.20/qingmeng-PHP/index.php?m=Api&c=User&a=handle";
-	private static String url = "http://plugin.client.qxiu.com/qmeng/anchor/bePenRank";
+//	private static String url = "http://plugin.client.qxiu.com/qmeng/anchor/bePenRank";
 
 	public static void main(String[] args) throws IOException {
 		url = setParam();
