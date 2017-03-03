@@ -7,9 +7,13 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import me.money.type.utils.TimePause;
 
 public class TestProducer {
+	private static Logger logger = LoggerFactory.getLogger(TestProducer.class);
 
 	public static void main(String[] args) throws JMSException {
 		// TODO Auto-generated method stub
@@ -22,7 +26,7 @@ public class TestProducer {
 			TextMessage message = session.createTextMessage("消息" + i);
 			message.setStringProperty("JMSXGroupID", "niu-test");
 			producer.send(message);
-			System.out.println("发送消息a："+message.getText());
+			logger.info("发送消息a：" + message.getText());
 			TimePause.pause(1);
 		}
 
