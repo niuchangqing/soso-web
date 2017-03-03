@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- properties元素必须放在配置文件的最开头 -->
+	<properties resource="jungle.properties">
+	</properties>
+	
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="defaultStatementTimeout" value="10" />
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.tencent.jungle.db.datasource.HicariDataSourceFactory" alias="HICARI" />
+	</typeAliases>
+	<plugins>
+	  <plugin interceptor="com.tencent.jungle.db.interceptor.SqlLoggerInterceptor">
+       <property name="logSql" value="true"/>
+       <property name="logSqlTimeCost" value="true"/>
+	  </plugin>
+	</plugins>
+	<environments default="hicari">
+		<environment id="default">
+			<transactionManager type="JDBC">
+				<property name="autoCommit" value="false" />
+			</transactionManager>
+
+			<dataSource type="HICARI">
+				<property name="dataSourceClassName" value="net.sourceforge.jtds.jdbcx.JtdsDataSource" />
+				<property name="dataSource.user" value="${db-def-user}" />
+				<property name="dataSource.password" value="${db-def-pwd}" />
+				<property name="dataSource.databaseName" value="qxiu_client" />
+				<property name="dataSource.serverName" value="${db-def-ip}" />
+				<property name="dataSource.portNumber" value="${db-def-port}" />
+				<property name="dataSource.socketTimeout" value="10" />
+				<property name="connectionTestQuery" value="select 1" />
+			</dataSource>
+			
+		</environment>
+		
+	</environments>
+	
+	<mappers>
+		<package name="com.qxiu.qmeng.main.mapper" />
+	</mappers>
+</configuration>
