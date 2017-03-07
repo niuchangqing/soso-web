@@ -1,6 +1,6 @@
 package me.money.type.kafka;
 
-import me.money.type.utils.TimePause;
+import me.money.type.utils.TimeStop;
 
 public class KafkaCon {
 	public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class KafkaCon {
 		KConsumer kc = new KConsumer("test", "niucqing");
 		kc.start();
 
-		TimePause.pause(1000);
+		TimeStop.pause(1000);
 	}
 
 }

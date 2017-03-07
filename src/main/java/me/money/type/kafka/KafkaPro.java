@@ -1,6 +1,6 @@
 package me.money.type.kafka;
 
-import me.money.type.utils.TimePause;
+import me.money.type.utils.TimeStop;
 
 public class KafkaPro {
 
@@ -8,7 +8,7 @@ public class KafkaPro {
 		KProducer sc = new KProducer(KafkaProperties.topic2, false);
 		sc.start();
 
-		TimePause.pause(100);
+		TimeStop.pause(100);
 	}
 
 }

@@ -10,7 +10,7 @@ import javax.jms.Topic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import me.money.type.utils.TimePause;
+import me.money.type.utils.TimeStop;
 
 public class TestProducer {
 	private static Logger logger = LoggerFactory.getLogger(TestProducer.class);
@@ -27,7 +27,7 @@ public class TestProducer {
 			message.setStringProperty("JMSXGroupID", "niu-test");
 			producer.send(message);
 			logger.info("发送消息a：" + message.getText());
-			TimePause.pause(1);
+			TimeStop.pause(1);
 		}
 
 		conn.close();
