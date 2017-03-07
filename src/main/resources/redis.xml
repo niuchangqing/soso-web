@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<redis>
+	<server>
+		<describe>本地redis</describe>
+		<name>test</name>
+		<ip>127.0.0.1</ip>
+		<port>6379</port>
+		<maxidle>100</maxidle>
+		<minidle>10</minidle>
+		<maxtotal>1000</maxtotal>
+		<maxwaitmillis>2000</maxwaitmillis>
+	</server>
+
+	<server>
+		<describe>48测试服务器</describe>
+		<name>qm</name>
+		<ip>121.201.62.48</ip>
+		<port>6777</port>
+		<maxidle>100</maxidle>
+		<minidle>10</minidle>
+		<maxtotal>1000</maxtotal>
+		<maxwaitmillis>2000</maxwaitmillis>
+	</server>
+</redis>
