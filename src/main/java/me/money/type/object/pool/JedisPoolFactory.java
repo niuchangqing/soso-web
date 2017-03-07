@@ -1,51 +1,33 @@
 package me.money.type.object.pool;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.pool2.PooledObject;
-import org.apache.commons.pool2.PooledObjectFactory;
-
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
-public class JedisPoolFactory implements PooledObjectFactory<Jedis> {
-	private PropertiesConfiguration pconf;
+public class JedisPoolFactory {
 
-	public JedisPoolFactory() {
-		// TODO Auto-generated constructor stub
+	private static final String HOST = "121.201.62.48";
+	private static final int PORT = 6777;
+
+	private static JedisPool pool;
+
+	static {
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxWaitMillis(1000);
+		config.setMaxIdle(100);
+		config.setMinIdle(10);
+		config.setMaxTotal(1000);
+		pool = new JedisPool(config, HOST, PORT);
+
+		System.out.println();
 	}
 
-	public JedisPoolFactory(PropertiesConfiguration pconf) {
-		// TODO Auto-generated constructor stub
-		this.pconf = pconf;
+	public static Jedis get() {
+		return pool.getResource();
 	}
 
-	@Override
-	public void activateObject(PooledObject<Jedis> arg0) throws Exception {
-		// TODO Auto-generated method stub
-
+	public static void returnResource(Jedis resource) {
+		if (null != resource)
+			pool.returnResource(resource);
 	}
-
-	@Override
-	public void destroyObject(PooledObject<Jedis> arg0) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public PooledObject<Jedis> makeObject() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void passivateObject(PooledObject<Jedis> arg0) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean validateObject(PooledObject<Jedis> arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
