@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import me.money.type.object.pool.JedisPoolFactory;
 import me.money.type.object.pool.JedisPoolMulti;
 import redis.clients.jedis.Jedis;
 

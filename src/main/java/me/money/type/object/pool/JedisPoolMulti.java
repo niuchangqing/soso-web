@@ -14,10 +14,6 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisPoolMulti {
 	private static final HashMap<String, JedisPool> map = new HashMap<String, JedisPool>();
 
-	public static void main(String[] args) throws ConfigurationException {
-		// TODO Auto-generated method stub
-	}
-
 	private static void create(RedisBean bean) {
 		JedisPoolConfig config = new JedisPoolConfig();
 		config.setMaxWaitMillis(bean.getMaxwaitmillis());
@@ -44,7 +40,7 @@ public class JedisPoolMulti {
 		if (!map.containsKey(name))
 			throw new RuntimeException("未找到名称为[" + name + "]的redis连接池");
 		if (null != jedis)
-			map.get(name).returnResource(jedis);;
+			map.get(name).returnResource(jedis);
 		System.err.println("连接返还");
 	}
 
