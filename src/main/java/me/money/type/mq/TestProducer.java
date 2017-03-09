@@ -27,7 +27,7 @@ public class TestProducer {
 			message.setStringProperty("JMSXGroupID", "niu-test");
 			producer.send(message);
 			logger.info("发送消息a：" + message.getText());
-			TimeStop.pause(1);
+			TimeStop.second(1);
 		}
 
 		conn.close();

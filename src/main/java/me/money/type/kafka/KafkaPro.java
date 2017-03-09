@@ -8,7 +8,7 @@ public class KafkaPro {
 		KProducer sc = new KProducer(KafkaProperties.topic2, false);
 		sc.start();
 
-		TimeStop.pause(100);
+		TimeStop.second(100);
 	}
 
 }

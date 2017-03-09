@@ -2,13 +2,13 @@
 <redis>
 	<server>
 		<describe>本地redis</describe>
-		<name>test</name>
+		<name>local</name>
 		<ip>127.0.0.1</ip>
 		<port>6379</port>
-		<maxidle>100</maxidle>
-		<minidle>10</minidle>
-		<maxtotal>1000</maxtotal>
-		<maxwaitmillis>2000</maxwaitmillis>
+		<maxidle>1000</maxidle>
+		<minidle>100</minidle>
+		<maxtotal>100000</maxtotal>
+		<maxwaitmillis>20000</maxwaitmillis>
 	</server>
 
 	<server>

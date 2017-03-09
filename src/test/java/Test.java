@@ -1,10 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String s = "niucqing".substring(2);
-		System.out.println(s);
+		List<Long> anchorIds = new ArrayList<Long>();
+		anchorIds.add(123L);
+		
+		anchorIds.stream().forEach(e->System.out.println(e));
+		
 	}
 
 }

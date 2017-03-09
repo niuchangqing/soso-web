@@ -8,4 +8,13 @@ public class Log {
 		}
 	}
 
+	public static void logSingleLine(Object... objects) {
+		String space = "";
+		for (Object object : objects) {
+			System.err.print(space);
+			System.err.print(object);
+			space = " ";
+		}
+		System.err.println();
+	}
 }

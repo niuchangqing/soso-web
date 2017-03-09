@@ -28,6 +28,8 @@ public class Client {
 				if (StringUtils.isNotEmpty(ip))
 					break;
 			}
+			String json = redis.hget("anchor_info", "423229");
+			System.out.println();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

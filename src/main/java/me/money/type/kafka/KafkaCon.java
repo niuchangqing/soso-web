@@ -8,7 +8,7 @@ public class KafkaCon {
 		KConsumer kc = new KConsumer("test", "niucqing");
 		kc.start();
 
-		TimeStop.pause(1000);
+		TimeStop.second(1000);
 	}
 
 }
