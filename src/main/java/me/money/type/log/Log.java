@@ -1,20 +1,15 @@
 package me.money.type.log;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Log {
+	private static final String LINESEPRATOR = System.lineSeparator();
 
 	public static void log(Object... objects) {
-		for (Object object : objects) {
-			System.err.println(object);
-		}
+		System.err.println(StringUtils.join(objects, LINESEPRATOR));
 	}
 
 	public static void logSingleLine(Object... objects) {
-		String space = "";
-		for (Object object : objects) {
-			System.err.print(space);
-			System.err.print(object);
-			space = " ";
-		}
-		System.err.println();
+		System.err.println(StringUtils.join(objects, " "));
 	}
 }
