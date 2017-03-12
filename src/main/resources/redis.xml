@@ -5,10 +5,11 @@
 		<name>local</name>
 		<ip>127.0.0.1</ip>
 		<port>6379</port>
-		<maxidle>1000</maxidle>
-		<minidle>100</minidle>
-		<maxtotal>100000</maxtotal>
-		<maxwaitmillis>20000</maxwaitmillis>
+		<maxidle>1200</maxidle>
+		<minidle>1200</minidle>
+		<maxtotal>10000</maxtotal>
+		<testonborrow>true</testonborrow> 
+		<maxwaitmillis>3000</maxwaitmillis>
 	</server>
 
 	<server>

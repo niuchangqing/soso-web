@@ -1,51 +1,28 @@
 package me.money.type.object.pool;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
 
+import me.money.type.log.Log;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisPoolMulti {
-	private static final HashMap<String, JedisPool> map = new HashMap<String, JedisPool>();
+	private static Map<String, JedisPool> map = new ConcurrentHashMap<String, JedisPool>();
 
-	private static void create(RedisBean bean) {
-		JedisPoolConfig config = new JedisPoolConfig();
-		config.setMaxWaitMillis(bean.getMaxwaitmillis());
-		config.setMaxIdle(bean.getMaxidle());
-		config.setMinIdle(bean.getMinidle());
-		config.setMaxTotal(bean.getMaxtotal());
-		JedisPool pool = new JedisPool(config, bean.getIp(), bean.getPort());
-		map.put(bean.getName(), pool);
-	}
-
-	public static Jedis get(String name) {
-		if (map.isEmpty())
-			try {
-				init();
-			} catch (ConfigurationException e) {
-				throw new RuntimeException("初始化连接池异常", e);
-			}
-		if (!map.containsKey(name))
-			throw new RuntimeException("未找到名称为[" + name + "]的redis连接池");
-		return map.get(name).getResource();
-	}
-
-	public static void returnSource(String name, Jedis jedis) {
-		if (!map.containsKey(name))
-			throw new RuntimeException("未找到名称为[" + name + "]的redis连接池");
-		if (null != jedis)
-			map.get(name).returnResource(jedis);
-		System.err.println("连接返还");
-	}
-
-	private static void init() throws ConfigurationException {
-		XMLConfiguration config = new XMLConfiguration("redis.xml");
+	static {
+		XMLConfiguration config = null;
+		try {
+			config = new XMLConfiguration("redis.xml");
+		} catch (ConfigurationException e) {
+			Log.log(e);
+		}
 		List<ConfigurationNode> children = config.getRoot().getChildren();
 		for (ConfigurationNode node : children) {
 			List<ConfigurationNode> lines = node.getChildren();
@@ -72,12 +49,42 @@ public class JedisPoolMulti {
 					bean.setMaxtotal(Integer.valueOf(value));
 				} else if ("describe".equals(nodeName)) {
 					bean.setDescribe(value);
+				} else if ("testonborrow".equals(nodeName)) {
+					bean.setTestonborrow(Boolean.valueOf(value));
 				}
-				create(bean);
 			}
+			Log.log(bean);
+			create(bean);
 
-			System.out.println(bean.getDescribe() + " created...");
+			Log.logSingleLine(bean.getDescribe(), " created...");
 		}
+
+	}
+
+	private static void create(RedisBean bean) {
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxWaitMillis(bean.getMaxwaitmillis());
+		config.setMaxIdle(bean.getMaxidle());
+		config.setMinIdle(bean.getMinidle());
+		config.setMaxTotal(bean.getMaxtotal());
+		config.setTestOnBorrow(bean.isTestonborrow());
+		config.setTestOnReturn(true);
+		JedisPool pool = new JedisPool(config, bean.getIp(), bean.getPort());
+		map.put(bean.getName(), pool);
+	}
+
+	public static Jedis get(String name) {
+		if (!map.containsKey(name))
+			throw new RuntimeException("未找到名称为[" + name + "]的redis连接池");
+		return map.get(name).getResource();
+	}
+
+	public static void returnSource(String name, Jedis jedis) {
+		if (!map.containsKey(name))
+			throw new RuntimeException("未找到名称为[" + name + "]的redis连接池");
+		if (null != jedis)
+			map.get(name).returnResource(jedis);
+		// System.err.println("连接返还");
 	}
 
 }
@@ -91,6 +98,25 @@ class RedisBean {
 	private int maxwaitmillis;
 	private int maxtotal;
 	private String describe;
+	private boolean testonborrow;
+
+	private static final String lineSeparator = System.lineSeparator();
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(100);
+		sb.append("ip:").append(ip).append(lineSeparator).append("port:").append(port).append(lineSeparator)
+				.append("name:").append(name);
+		return sb.toString();
+	}
+
+	public boolean isTestonborrow() {
+		return testonborrow;
+	}
+
+	public void setTestonborrow(boolean testonborrow) {
+		this.testonborrow = testonborrow;
+	}
 
 	public int getPort() {
 		return port;
