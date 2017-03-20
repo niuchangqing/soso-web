@@ -1,4 +1,4 @@
-package me.money.type.delay;
+package me.money.type.queue;
 
 import java.util.Iterator;
 import java.util.concurrent.DelayQueue;
