@@ -26,13 +26,10 @@ public class HttpInvoker {
 	static {
 		cm = new PoolingHttpClientConnectionManager();
 		// Increase max total connection to 200
-		cm.setMaxTotal(200);
+		cm.setMaxTotal(100);
 		// Increase default max connection per route to 20
-		cm.setDefaultMaxPerRoute(20);
+		cm.setDefaultMaxPerRoute(50);
 
-		// Increase max connections for localhost:80 to 50
-		HttpHost localhost = new HttpHost("locahost", 80);
-		cm.setMaxPerRoute(new HttpRoute(localhost), 50);
 		httpClient = HttpClients.custom().setConnectionManager(cm).build();
 		Log.logSingleLine("cm.getTotalStats()", cm.getTotalStats());
 	}
