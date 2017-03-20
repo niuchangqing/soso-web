@@ -1,42 +1,47 @@
 package me.money.type.queue;
 
-import java.util.Iterator;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class DelayTest {
 
-	public static void main(String... args) {
-		DelayQueue dq = new DelayQueue();
-		DeleyedTest ob1 = new DeleyedTest(10);
-		DeleyedTest ob2 = new DeleyedTest(5);
-		DeleyedTest ob3 = new DeleyedTest(15);
+	public static void main(String... args) throws InterruptedException {
+		DelayQueue<Delayed> dq = new DelayQueue<Delayed>();
+		DeleyedTest ob1 = new DeleyedTest(10, "two");
+		DeleyedTest ob2 = new DeleyedTest(5, "one");
+		DeleyedTest ob3 = new DeleyedTest(15, "three");
 
-		dq.offer(ob1);
-		dq.offer(ob2);
-		dq.offer(ob3);
+		dq.add(ob1);
+		dq.add(ob2);
+		dq.add(ob3);
 
-		Iterator itr = dq.iterator();
-		while (itr.hasNext()) {
-			DeleyedTest dt = (DeleyedTest) itr.next();
-			System.out.println(dt.deleyTime);
+		while (true) {
+			DeleyedTest s = (DeleyedTest) dq.take();
+			System.out.println(s.get());
 		}
 	}
 }
 
 class DeleyedTest implements Delayed {
-	public long deleyTime = 0;
+	private long deleyTime = 0;
+	private String data;
 
-	DeleyedTest(long deleyTime) {
-		this.deleyTime = deleyTime;
+	DeleyedTest(long deleyTime, String data) {
+		this.deleyTime = System.currentTimeMillis() + deleyTime * 1000;
+		this.data = data;
+	}
+
+	public String get() {
+		return data;
 	}
 
 	@Override
 	public int compareTo(Delayed ob) {
 		if (this.deleyTime < ((DeleyedTest) ob).deleyTime) {
 			return -1;
-		} else if (this.deleyTime > ((DeleyedTest) ob).deleyTime) {
+		}
+		if (this.deleyTime > ((DeleyedTest) ob).deleyTime) {
 			return 1;
 		}
 		return 0;
@@ -44,8 +49,7 @@ class DeleyedTest implements Delayed {
 
 	@Override
 	public long getDelay(TimeUnit unit) {
-		unit.convert(deleyTime - System.currentTimeMillis(), TimeUnit.NANOSECONDS);
-		return 0;
+		return unit.convert(deleyTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
 	}
 
 }
