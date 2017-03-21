@@ -10,6 +10,11 @@ import com.google.common.cache.LoadingCache;
 
 import me.money.type.log.Log;
 
+/**
+ * 
+ * @author Niucqing
+ * @email niucqing@gmail.com
+ */
 public class UserCatch {
 
 	private static LoadingCache<String, String> cache;
