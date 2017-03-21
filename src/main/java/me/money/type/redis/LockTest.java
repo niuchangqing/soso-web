@@ -23,7 +23,7 @@ public class LockTest {
 				@Override
 				public void run() {
 					Pair<Boolean, Map<String, Object>> lockdd = lockdd(22222, 10);
-					Log.logSingleLine(lockdd.getValue0(),lockdd.getValue1());
+					Log.log(lockdd.getValue0(),lockdd.getValue1());
 				}
 			});
 		}

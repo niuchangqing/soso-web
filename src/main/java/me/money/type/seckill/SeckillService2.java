@@ -27,11 +27,11 @@ public class SeckillService2 {
 		try {
 			success = pen();
 			if(!success){
-				Log.logSingleLine(name,"failer");
+				Log.log(name,"failer");
 				return false;
 			}
 
-			Log.logSingleLine(name, "success！");
+			Log.log(name, "success！");
 			jedis.incr("success");
 			SosoQueues.put(name);
 		} catch (Exception e) {

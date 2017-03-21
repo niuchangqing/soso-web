@@ -58,13 +58,13 @@ class mytask implements Runnable {
 				if (!StringUtils.equals(currentLock, lockValue)) {
 					return;
 				}
-				Log.logSingleLine(getTime(), name, "拿到新锁", "死锁失效");
+				Log.log(getTime(), name, "拿到新锁", "死锁失效");
 			}
 		}
 
 		try {
 			int c = new Random().nextInt(10);
-			Log.logSingleLine(getTime(), name, "do something ... will need", c, "s");
+			Log.log(getTime(), name, "do something ... will need", c, "s");
 
 			TimeStop.second(c);
 

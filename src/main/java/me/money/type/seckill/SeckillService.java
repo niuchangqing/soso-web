@@ -33,7 +33,7 @@ public class SeckillService implements Runnable {
 				return success;
 			}
 
-			Log.logSingleLine(name, "success！");
+			Log.log(name, "success！");
 			jedis.incr("success");
 			SosoQueues.put(name);
 		} catch (Exception e) {

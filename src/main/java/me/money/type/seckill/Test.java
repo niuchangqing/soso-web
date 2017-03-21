@@ -16,7 +16,7 @@ public class Test {
 			public void run() {
 				while (true) {
 					String data = SosoQueues.take();
-					Log.logSingleLine("队列获得数据：", data);
+					Log.log("队列获得数据：", data);
 				}
 			}
 		});

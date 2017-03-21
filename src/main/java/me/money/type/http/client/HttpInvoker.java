@@ -31,7 +31,7 @@ public class HttpInvoker {
 		cm.setDefaultMaxPerRoute(50);
 
 		httpClient = HttpClients.custom().setConnectionManager(cm).build();
-		Log.logSingleLine("cm.getTotalStats()", cm.getTotalStats());
+		Log.log("cm.getTotalStats()", cm.getTotalStats());
 	}
 
 	public static void get(String url) throws ClientProtocolException, IOException {
@@ -48,7 +48,7 @@ public class HttpInvoker {
 			Stopwatch s = Stopwatch.createStarted();
 			get("http://datacenter.qxiu.com/cgi/anchor/micInfo?anchorIds=[423229]");
 			long ss = s.elapsed(TimeUnit.MILLISECONDS);
-			Log.logSingleLine(ss);
+			Log.log(ss);
 		}
 	}
 }

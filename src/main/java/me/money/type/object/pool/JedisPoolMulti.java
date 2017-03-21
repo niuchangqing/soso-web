@@ -56,7 +56,7 @@ public class JedisPoolMulti {
 			Log.log(bean);
 			create(bean);
 
-			Log.logSingleLine(bean.getDescribe(), " created...");
+			Log.log(bean.getDescribe(), " created...");
 		}
 
 	}
