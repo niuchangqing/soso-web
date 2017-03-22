@@ -10,7 +10,7 @@ public class Test {
 		// TODO Auto-generated method stub
 		Log.log("go----");
 
-		Pools.es.submit(new Runnable() {
+		Pools.submit(new Runnable() {
 
 			@Override
 			public void run() {
@@ -25,7 +25,7 @@ public class Test {
 		while (c < 100) {
 			c++;
 			for (int i = 0; i < 10000; i++) {
-				Pools.es.submit(new SeckillService("T" + i));
+				Pools.submit(new SeckillService("T" + i));
 			}
 			TimeStop.second(10);
 		}

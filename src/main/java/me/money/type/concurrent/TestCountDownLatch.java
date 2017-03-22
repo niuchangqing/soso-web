@@ -6,21 +6,18 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import me.money.type.log.Log;
+import me.money.type.object.pool.Pools;
 import me.money.type.utils.TimeStop;
 
 public class TestCountDownLatch {
-	private static ExecutorService es = Executors.newFixedThreadPool(10);
-
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		CountDownLatch cd = new CountDownLatch(10);
 		List<Future<Long>> list = new ArrayList<Future<Long>>();
 		for (int i = 0; i < 10; i++) {
-			Future<Long> submit = es.submit(new worker(cd, new Random().nextInt(100)));
+			Future<Long> submit = Pools.submit(new worker(cd, new Random().nextInt(100)));
 			list.add(submit);
 		}
 		Log.log("主线程开始等待...");
