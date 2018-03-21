@@ -1,5 +1,3 @@
-package me.money.type.kafka;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements. See the NOTICE file distributed with
@@ -16,16 +14,16 @@ package me.money.type.kafka;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class KafkaProperties {
-	public static final String TOPIC = "topic1";
-	public static final String KAFKA_SERVER_URL = "127.0.0.1";
-	public static final int KAFKA_SERVER_PORT = 9092;
-	public static final int KAFKA_PRODUCER_BUFFER_SIZE = 64 * 1024;
-	public static final int CONNECTION_TIMEOUT = 100000;
-	public static final String TOPIC2 = "topic2";
-	public static final String TOPIC3 = "topic3";
-	public static final String CLIENT_ID = "SimpleConsumerDemoClient";
+package me.money.type.kafka;
 
-	private KafkaProperties() {
+public class KafkaConsumerDemo {
+	public static void main(String[] args) {
+		boolean isAsync = args.length == 0 || !args[0].trim().equalsIgnoreCase("sync");
+		isAsync = true;
+		System.out.println(isAsync);
+
+		Consumer consumerThread = new Consumer(KafkaProperties.TOPIC);
+		consumerThread.receive();
+
 	}
 }
