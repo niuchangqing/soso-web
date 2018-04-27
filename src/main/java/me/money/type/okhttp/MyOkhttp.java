@@ -33,7 +33,7 @@ public class MyOkhttp {
 			JsonIterator iter = JsonIterator.parse(rs);
 			Any any = iter.readAny();
 			Map<String, Object> result = any.getMap("result");
-			long count = Math.round((double) result.get("online"));
+			long count = Math.round((Double) result.get("online"));
 			System.out.println(count);
 			System.out.println(res.message());
 			System.out.println(res.receivedResponseAtMillis());

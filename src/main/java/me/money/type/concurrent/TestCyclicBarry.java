@@ -1,56 +1,52 @@
 package me.money.type.concurrent;
 
+import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import com.jfinal.template.ext.directive.Random;
-
-import me.money.type.log.Log;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestCyclicBarry {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	private static AtomicInteger ai = new AtomicInteger(0);
 
-		CyclicBarrier cb = new CyclicBarrier(3, new Runnable() {
-
-			@Override
-			public void run() {
-				System.out.println("主线程开始");
-			}
-		});
-		
-		CyclicBarrier c = new CyclicBarrier(3);
-
-		new Cb(cb, "老王").start();
-		new Cb(cb, "老牛").start();
-		new Cb(cb, "老韩").start();
-		
+	public static void main(String[] args) throws Exception {
+		// testDelayQueue();
+		testCyclicBarrier();
 	}
 
-}
+	private static void testCyclicBarrier() {
 
-class Cb extends Thread {
-	CyclicBarrier c;
-	String f;
+		final CyclicBarrier cb = new CyclicBarrier(10);
 
-	public Cb(CyclicBarrier c, String name) {
-		this.c = c;
-		this.f = name;
-	}
+		for (int i = 0; i < 10; i++) {
+			es.submit(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						TimeUnit.SECONDS.sleep(new Random().nextInt(10));
+						int name = ai.incrementAndGet();
+						System.out.println("[ " + name + " ]到达");
+						cb.await();
 
-	public void run() {
-		System.out.println(f + "wating orther...");
-
-		try {
-			TimeUnit.SECONDS.sleep(new java.util.Random().nextInt(10));
-			c.await();
-
-			Log.log(f + " continue...");
-		} catch (InterruptedException | BrokenBarrierException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+						System.out.println("出发");
+						TimeUnit.SECONDS.sleep(new Random().nextInt(10));
+						System.out.println(name + "完毕");
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (BrokenBarrierException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		}
+		es.shutdown();
 	}
+
+	private static ExecutorService es = Executors.newFixedThreadPool(10);
+
 }

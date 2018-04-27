@@ -28,7 +28,7 @@ public class KConsumer extends Thread {
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
 				"org.apache.kafka.common.serialization.StringDeserializer");
 
-		consumer = new KafkaConsumer<>(props);
+		consumer = new KafkaConsumer(props);
 	}
 
 	@Override
