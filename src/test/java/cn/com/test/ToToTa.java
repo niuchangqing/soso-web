@@ -1,4 +1,4 @@
-package me.money.type.totota;
+package cn.com.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
 
+import me.money.type.object.pool.Pools;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -27,12 +27,32 @@ public class ToToTa {
 	private static Logger logger = LoggerFactory.getLogger(ToToTa.class);
 	private static final OkHttpClient client = new OkHttpClient().newBuilder().readTimeout(2, TimeUnit.SECONDS)
 			.connectTimeout(2, TimeUnit.SECONDS).build();
-	private static AtomicInteger times = new AtomicInteger(0);
+
 	public static void main(String[] args) {
-		List<String> phones = new ArrayList<String>();
-//		// phones.add("13120061957");
-		phones.add("13833451966");// 牛解亮
-		totota(phones);
+		// List<String> phones = new ArrayList<String>();
+		// // phones.add("13120061957");
+		// phones.add("13833451966");// 牛解亮
+		// totota(phones);
+
+		for (int i = 0; i < 200; i++) {
+			Pools.submit(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Request req = new Request.Builder().url("http://localhost:8080/blog/save").build();
+					Stopwatch sw = Stopwatch.createStarted();
+					try {
+						Response res = client.newCall(req).execute();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					long elapsed = sw.elapsed(TimeUnit.MILLISECONDS);
+					logger.error("耗时： " + elapsed +" ms");
+				}
+			});
+		}
 	}
 
 	public static void totota(List<String> phones) {
@@ -43,12 +63,11 @@ public class ToToTa {
 			@Override
 			public void run() {
 				maozhua(phones);
-//				 liantong(phones);
-//				 yidong(phones);
-//				 kfc(phones);
-//				 secoo(phones);
-//				 fenxiangxiaoke(phones);
-				logger.error("times = "+times);
+				// liantong(phones);
+				// yidong(phones);
+				// kfc(phones);
+				// secoo(phones);
+				// fenxiangxiaoke(phones);
 			}
 		}, 2, 65, TimeUnit.SECONDS);
 	}
@@ -73,7 +92,7 @@ public class ToToTa {
 				logger.error("", e);
 			}
 		}
-		times.incrementAndGet();
+
 	}
 
 	/**

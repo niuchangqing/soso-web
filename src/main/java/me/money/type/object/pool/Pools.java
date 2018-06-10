@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Pools {
-	public static final ExecutorService es = Executors.newFixedThreadPool(600);
+	public static final ExecutorService es = Executors.newFixedThreadPool(10);
 
 	public static void submit(Runnable task) {
 		es.submit(task);

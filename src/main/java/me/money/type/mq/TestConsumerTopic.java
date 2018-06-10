@@ -11,7 +11,7 @@ import javax.jms.TextMessage;
 
 import soso.utils.TimePause;
 
-public class TestConsumer implements MessageListener {
+public class TestConsumerTopic implements MessageListener {
 
 	public static void main(String[] args) throws JMSException {
 		// TODO Auto-generated method stub
@@ -22,7 +22,7 @@ public class TestConsumer implements MessageListener {
 
 		MessageConsumer consumer = session.createConsumer(destination);
 
-		TestConsumer t = new TestConsumer();
+		TestConsumerTopic t = new TestConsumerTopic();
 		consumer.setMessageListener(t);
 
 		TimePause.pause(10000);
